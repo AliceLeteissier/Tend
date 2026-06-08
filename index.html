@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEND — Surreal Wellness Rehabilitation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="loading-screen">
+      <div class="loading-inner">
+        <h1 class="loading-title">TEND</h1>
+        <p class="loading-subtitle">Surreal Wellness Rehabilitation</p>
+        <div class="loading-bar-track">
+          <div class="loading-bar" id="loading-bar"></div>
+        </div>
+        <p class="loading-status" id="loading-status">Initialising clinic…</p>
+      </div>
+    </div>
+
+    <div id="ui-overlay">
+      <div class="station-info">
+        <span class="station-label">Station I</span>
+        <span class="station-name">Neck Relief</span>
+      </div>
+    </div>
+
+    <button id="xr-button" style="display:none">Enter VR</button>
+
+    <canvas id="canvas"></canvas>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
