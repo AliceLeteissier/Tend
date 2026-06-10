@@ -1,10 +1,13 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
+import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig({
+  plugins: [mkcert()],
   server: {
-    host: true, // expose on local network so a VR headset can connect
+    host: true,
+    https: true,
   },
   build: {
-    target: 'esnext',
+    target: "esnext",
   },
-})
+});

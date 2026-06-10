@@ -32,6 +32,7 @@ export function createRuins(scene: THREE.Scene): void {
   loader.load(
     "/assets/ruin1.glb", // ← rename to your actual file
     (gltf) => {
+      console.log("✅ ruin1.glb loaded");
       const instances: THREE.Group[] = [];
 
       PLACEMENTS.forEach((p, i) => {
