@@ -4,36 +4,10 @@ import GUI from "lil-gui";
 
 const CIRCUMRADIUS = 11.0;
 const SPACING = 1.2;
-const GLOBAL_SCALE = 0.5;
+const GLOBAL_SCALE = 0.3;
 const Y_OFFSET = 0.0;
 const RANDOM_ROT = 0.4;
 const RANDOM_SCALE = 0.25;
-
-function showDebug(msg: string, isError = false): void {
-  let box = document.getElementById("ivy-debug");
-  if (!box) {
-    box = document.createElement("div");
-    box.id = "ivy-debug";
-    box.style.cssText = `
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 9999;
-      background: rgba(0,0,0,0.85);
-      color: #80ffcc;
-      font-family: monospace;
-      font-size: 13px;
-      padding: 16px;
-      max-width: 500px;
-      border: 1px solid #80ffcc;
-      white-space: pre-wrap;
-    `;
-    document.body.appendChild(box);
-  }
-  box.style.color = isError ? "#ff6b6b" : "#80ffcc";
-  box.style.borderColor = isError ? "#ff6b6b" : "#80ffcc";
-  box.textContent = msg;
-}
 
 function getHexVertices(R: number): THREE.Vector3[] {
   const verts: THREE.Vector3[] = [];
@@ -70,8 +44,6 @@ function computePlacements(
 }
 
 export function createIvy(scene: THREE.Scene): void {
-  showDebug("⏳ Attempting to load ivy...");
-
   const params = {
     yOffset: Y_OFFSET,
     scale: GLOBAL_SCALE,
@@ -84,8 +56,6 @@ export function createIvy(scene: THREE.Scene): void {
   loader.load(
     "/assets/ivy.glb",
     (gltf) => {
-      showDebug(`✅ Loaded — ${gltf.scene.children.length} children in scene`);
-
       const placements = computePlacements(CIRCUMRADIUS, SPACING);
       const instances: THREE.Object3D[] = [];
 
@@ -114,8 +84,6 @@ export function createIvy(scene: THREE.Scene): void {
         scene.add(instance);
         instances.push(instance);
       });
-
-      showDebug(`✅ Done — ${instances.length} instances placed`);
 
       // GUI
       const gui = new GUI({ title: "TEND — Ivy", width: 280 });

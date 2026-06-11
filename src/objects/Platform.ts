@@ -74,13 +74,4 @@ export function createPlatform(scene: THREE.Scene): void {
   inner.receiveShadow = true;
   inner.geometry.setAttribute("uv1", inner.geometry.getAttribute("uv"));
   scene.add(inner);
-
-  // Edge lip — plain stone
-  const lip = new THREE.Mesh(
-    new THREE.TorusGeometry(11.0, 0.18, 6, 6),
-    sideMat,
-  );
-  lip.rotation.x = Math.PI / 2;
-  lip.position.y = 0.17;
-  scene.add(lip);
 }

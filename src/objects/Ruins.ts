@@ -53,7 +53,7 @@ export function createRuins(scene: THREE.Scene): void {
       });
 
       // Attach GUI controls after assets are in the scene
-      setupAssetGUI("Ruins", instances, PLACEMENTS);
+      // setupAssetGUI("Ruins", instances, PLACEMENTS);
     },
     undefined,
     (err) => console.error("Ruin load failed:", err),

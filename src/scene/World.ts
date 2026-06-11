@@ -95,29 +95,11 @@ export async function buildWorld(): Promise<void> {
   // ── State ──────────────────────────────────────────────────────────────
   let state: ExperienceState = "idle";
   // Temporary state display — remove when done debugging
-  const stateDisplay = document.createElement("div");
-  stateDisplay.style.cssText = `
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-  background: rgba(0,0,0,0.8);
-  color: #80ffcc;
-  font-family: monospace;
-  font-size: 14px;
-  padding: 12px;
-`;
-  document.body.appendChild(stateDisplay);
 
-  function updateStateDisplay(): void {
-    stateDisplay.textContent = `state: ${state}`;
-  }
-  updateStateDisplay();
   const overlay = new Overlay(scene, camera, renderer); // ← fixed
   let modeIndex = 0;
 
   function cycleMode(): void {
-    updateStateDisplay();
     if (state !== "active") return;
     modeIndex = (modeIndex + 1) % MODES.length;
     orbParams.movementMode = MODES[modeIndex];
@@ -125,26 +107,35 @@ export async function buildWorld(): Promise<void> {
   }
 
   function startBriefing(): void {
-    updateStateDisplay();
     if (state !== "idle") return;
     state = "briefing";
 
-    // First overlay
-    overlay.show(["Keep your gaze on the orb"]);
+    // First message
+    overlay.show(["Welcome to the Cervical Recalibration Clinic."]);
 
     setTimeout(() => {
       if (state !== "briefing") return;
 
-      // Second overlay
-      overlay.show(["Touch the orb to change movement"]);
+      // Second message
+      overlay.show([
+        "You have been diagnosed with Acute Digital Neck Syndrome.",
+      ]);
 
       setTimeout(() => {
         if (state !== "briefing") return;
-        overlay.hide();
-        state = "active";
-        updateStateDisplay();
-      }, 5000);
-    }, 5000);
+
+        // Third message
+        overlay.show([
+          "Follow the Orb to Relieve Neck Tension. Touch the Orb to change Exercise.",
+        ]);
+
+        setTimeout(() => {
+          if (state !== "briefing") return;
+          overlay.hide();
+          state = "active";
+        }, 4000);
+      }, 4000);
+    }, 3000);
   }
 
   function resetExperience(): void {
