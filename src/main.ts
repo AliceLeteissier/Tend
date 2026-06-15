@@ -1,4 +1,4 @@
-import './style.css'
-import { buildWorld } from './scene/World'
+import "./style.css";
+import { buildWorld } from "./scene/World";
 
-buildWorld().catch(console.error)
+buildWorld().catch(console.error);

@@ -1,8 +1,8 @@
 import * as THREE from "three";
 
 /**
- * Floor marker indicating where the user should stand.
- * Includes: glowing ring, foot guides, directional arrow, "STAND HERE" label.
+ * Floor marker
+ * ( glowing ring, foot guides, directional arrow, "STAND HERE" label )
  */
 export function createFloorMarker(scene: THREE.Scene): void {
   const markerMat = new THREE.MeshStandardMaterial({

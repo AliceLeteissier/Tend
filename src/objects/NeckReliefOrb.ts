@@ -116,51 +116,24 @@ export function createNeckReliefOrb(scene: THREE.Scene): {
   outer.name = "orb-outer";
   group.add(outer); // index 2
 
-  // ── Orbit rings ───────────────────────────────────────────────────────────
-  const ringGeo = new THREE.TorusGeometry(0.34, 0.012, 12, 80);
-  const ringMat = new THREE.MeshStandardMaterial({
-    color: 0xaaccff,
-    emissive: new THREE.Color(0x4488ff),
-    emissiveIntensity: 0.8,
-    transparent: true,
-    opacity: 0.55,
-  });
-  const ring1 = new THREE.Mesh(ringGeo, ringMat);
-  ring1.name = "orb-ring1";
-  ring1.rotation.x = Math.PI / 5;
-  group.add(ring1); // index 3
+  // // ── Orbit rings ───────────────────────────────────────────────────────────
+  // const ringGeo = new THREE.TorusGeometry(0.34, 0.012, 12, 80);
+  // const ringMat = new THREE.MeshStandardMaterial({
+  //   color: 0xaaccff,
+  //   emissive: new THREE.Color(0x4488ff),
+  //   emissiveIntensity: 0.8,
+  //   transparent: true,
+  //   opacity: 0.55,
+  // });
+  // const ring1 = new THREE.Mesh(ringGeo, ringMat);
+  // ring1.name = "orb-ring1";
+  // ring1.rotation.x = Math.PI / 5;
+  // group.add(ring1); // index 3
 
-  const ring2 = new THREE.Mesh(ringGeo, ringMat.clone());
-  ring2.name = "orb-ring2";
-  ring2.rotation.set(Math.PI / 2.5, Math.PI / 4, 0);
-  group.add(ring2); // index 4
-
-  // ── Label ─────────────────────────────────────────────────────────────────
-  const labelCanvas = document.createElement("canvas");
-  labelCanvas.width = 512;
-  labelCanvas.height = 96;
-  const ctx = labelCanvas.getContext("2d")!;
-  ctx.clearRect(0, 0, 512, 96);
-  ctx.font = '400 16px "Share Tech Mono", "Courier New"';
-  ctx.fillStyle = "rgba(180, 210, 255, 0.8)";
-  ctx.textAlign = "center";
-  ctx.fillText("NECK RELIEF ORB", 256, 46);
-  ctx.font = '300 11px "Share Tech Mono", "Courier New"';
-  ctx.fillStyle = "rgba(180, 210, 255, 0.4)";
-  ctx.fillText("STATION  I", 256, 68);
-
-  const labelMesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(1.2, 0.22),
-    new THREE.MeshBasicMaterial({
-      map: new THREE.CanvasTexture(labelCanvas),
-      transparent: true,
-      side: THREE.DoubleSide,
-      depthWrite: false,
-    }),
-  );
-  labelMesh.position.set(0, 0.55, 0);
-  labelMesh.renderOrder = 1;
-  group.add(labelMesh); // index 5
+  // const ring2 = new THREE.Mesh(ringGeo, ringMat.clone());
+  // ring2.name = "orb-ring2";
+  // ring2.rotation.set(Math.PI / 2.5, Math.PI / 4, 0);
+  // group.add(ring2); // index 4
 
   // ── lil-gui ───────────────────────────────────────────────────────────────
   const gui = new GUI({ title: "TEND — Orb", width: 300 });
@@ -256,15 +229,15 @@ export function createNeckReliefOrb(scene: THREE.Scene): {
     .name("Figure-8 height");
   animFolder.add(params, "pulseSpeed", 0, 10, 0.01).name("Pulse speed");
 
-  const ringFolder = gui.addFolder("Rings");
-  ringFolder
-    .add(params, "ringsVisible")
-    .name("Visible")
-    .onChange((v: boolean) => {
-      ring1.visible = v;
-      ring2.visible = v;
-    });
-  ringFolder.add(params, "ringSpeed", 0, 0.05, 0.001).name("Rotation speed");
+  // const ringFolder = gui.addFolder("Rings");
+  // ringFolder
+  //   .add(params, "ringsVisible")
+  //   .name("Visible")
+  //   .onChange((v: boolean) => {
+  //     ring1.visible = v;
+  //     ring2.visible = v;
+  //   });
+  // ringFolder.add(params, "ringSpeed", 0, 0.05, 0.001).name("Rotation speed");
 
   const lightFolder = gui.addFolder("Glow light");
   lightFolder.add(params, "lightIntensity", 0, 5, 0.01).name("Intensity");
@@ -285,13 +258,8 @@ export function createNeckReliefOrb(scene: THREE.Scene): {
 /**
  * Call every frame from the animation loop.
  *
- * FIGURE-8 MATH:
- * A lemniscate (figure-8) is traced using a parametric formula:
- *   x(t) = width  * sin(t)
- *   z(t) = height * sin(t) * cos(t)   [equivalent to (height/2) * sin(2t)]
- * This produces a smooth continuous 8-shape in the XZ plane.
- * The orb also floats gently up and down on a separate slower sine wave,
- * giving it a three-dimensional drifting quality.
+ * FIGURE-8 MATH traced using a lemniscate formula
+
  */
 export function animateOrb(
   group: THREE.Group,

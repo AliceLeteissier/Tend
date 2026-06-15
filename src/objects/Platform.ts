@@ -14,8 +14,7 @@ const TEXTURE_PATHS = {
 };
 
 // How many times the texture tiles across the floor surface.
-// Increase if the texture looks stretched, decrease if too busy.
-const TEXTURE_REPEAT = 4;
+const TEXTURE_REPEAT = 6;
 
 export function createPlatform(scene: THREE.Scene): void {
   const loader = new THREE.TextureLoader();
@@ -45,15 +44,14 @@ export function createPlatform(scene: THREE.Scene): void {
     metalness: 0.0,
   });
 
-  // Plain stone for the sides and lip (no tiling needed there)
+  // Plain stone for the sides
   const sideMat = new THREE.MeshStandardMaterial({
     color: 0x9a9088,
     roughness: 0.92,
     metalness: 0.04,
   });
 
-  // Main hexagonal body — sides use sideMat, top/bottom use stoneMat
-  // CylinderGeometry face order: [side, top cap, bottom cap]
+  // Main hexagonal body
   const body = new THREE.Mesh(new THREE.CylinderGeometry(11.0, 11.4, 0.35, 6), [
     sideMat,
     stoneMat,

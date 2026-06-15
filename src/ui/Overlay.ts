@@ -38,30 +38,49 @@ export class Overlay {
   }
 
   show(lines: string[]): void {
-    // ── HTML overlay — desktop ───────────────────────────────────────────
-    this.el.innerHTML = lines
-      .map(
-        (line) => `
+    // ── Split lines into 3 parts — shared between desktop and VR ──────────
+    const allLines: string[] = [];
+    lines.forEach((line) => {
+      const words = line.split(" ");
+      const third = Math.ceil(words.length / 3);
+      const line1 = words.slice(0, third).join(" ");
+      const line2 = words.slice(third, third * 2).join(" ");
+      const line3 = words.slice(third * 2).join(" ");
+      allLines.push(line1);
+      if (line2) allLines.push(line2);
+      if (line3) allLines.push(line3);
+    });
+
+    // ── HTML overlay — desktop ────────────────────────────────────────────
+    this.el.innerHTML = `
+    <div style="
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 24px;
+      border: 1px solid rgba(5, 10, 30, 0.15);
+      padding: 32px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      max-width: 560px;
+    ">
+      ${allLines
+        .map(
+          (line) => `
         <p style="
-          font-family: 'IM fell english', Georgia, serif;
-          font-size: 20px;
-          letter-spacing: 0.15em;
-          color: rgba(5, 10, 30, 1);
+          font-family: 'IM Fell English', Georgia, serif;
+          font-size: 22px;
+          letter-spacing: 0.1em;
+          color: rgba(5, 10, 30, 0.95);
           text-align: center;
           margin: 0;
-          max-width: 560px;
-          line-height: 1.6;
-          text-shadow:
-            0 0 8px rgba(255, 255, 255, 1),
-            0 0 16px rgba(255, 255, 255, 1),
-            0 0 30px rgba(255, 255, 255, 1),
-            0 0 50px rgba(255, 255, 255, 0.9),
-            0 0 80px rgba(255, 255, 255, 0.7),
-            0 0 120px rgba(255, 255, 255, 0.5);
+          line-height: 1.5;
         ">${line}</p>
       `,
-      )
-      .join("");
+        )
+        .join("")}
+    </div>
+  `;
     void this.el.offsetHeight;
     this.el.style.opacity = "1";
 
@@ -78,42 +97,26 @@ export class Overlay {
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, W, H);
 
-    // White background with rounded corners
+    // White background
     ctx.fillStyle = "rgba(255, 255, 255, 0.97)";
     this.roundRect(ctx, 0, 0, W, H, 24);
     ctx.fill();
 
-    // Subtle border
+    // Border
     ctx.strokeStyle = "rgba(5, 10, 30, 0.15)";
     ctx.lineWidth = 2;
     this.roundRect(ctx, 2, 2, W - 4, H - 4, 22);
     ctx.stroke();
 
-    // Split each line into two wrapped lines if too long
-    // Split each line into three wrapped lines
-    const allLines: string[] = [];
-    lines.forEach((line) => {
-      const words = line.split(" ");
-      const third = Math.ceil(words.length / 3);
-      const line1 = words.slice(0, third).join(" ");
-      const line2 = words.slice(third, third * 2).join(" ");
-      const line3 = words.slice(third * 2).join(" ");
-      allLines.push(line1);
-      if (line2) allLines.push(line2);
-      if (line3) allLines.push(line3);
-    });
-
-    // Center text vertically
+    // Center text vertically — reuse allLines from above
     const lineHeight = 60;
     const totalHeight = allLines.length * lineHeight;
     const startY = (H - totalHeight) / 2 + lineHeight * 0.8;
 
     allLines.forEach((line, i) => {
-      ctx.font = '400 32px "IM fell english", Georgia, serif';
+      ctx.font = '400 32px "IM Fell English", Georgia, serif';
       ctx.fillStyle = "rgba(5, 10, 30, 0.95)";
       ctx.textAlign = "center";
-
-      // Subtle shadow for depth
       ctx.shadowColor = "rgba(5, 10, 30, 0.1)";
       ctx.shadowBlur = 4;
       ctx.fillText(line, W / 2, startY + i * lineHeight);
@@ -127,7 +130,7 @@ export class Overlay {
         map: texture,
         transparent: true,
         depthWrite: false,
-        depthTest: false, // always renders in front of everything
+        depthTest: false,
         side: THREE.DoubleSide,
       }),
     );

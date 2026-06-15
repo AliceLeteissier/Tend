@@ -119,8 +119,6 @@ export function createIvy(scene: THREE.Scene): void {
         .name("📋 Log values to console");
     },
     undefined,
-    (err) => {
-      showDebug(`❌ Load failed:\n${err}`, true);
-    },
+    (err) => {},
   );
 }

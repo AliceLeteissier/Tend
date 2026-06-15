@@ -134,7 +134,7 @@ export async function buildWorld(): Promise<void> {
           overlay.hide();
           state = "active";
         }, 4000);
-      }, 4000);
+      }, 3000);
     }, 3000);
   }
 
@@ -174,7 +174,7 @@ export async function buildWorld(): Promise<void> {
     if (hits.length > 0) cycleMode();
   });
 
-  // VR controller trigger via selectstart — most reliable on Quest
+  // VR controller trigger
   vrController.addEventListener("selectstart", () => {
     const origin = new THREE.Vector3();
     const direction = new THREE.Vector3(0, 0, -1);

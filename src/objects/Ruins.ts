@@ -2,13 +2,6 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { setupAssetGUI } from "../ui/AssetGUI";
 
-/**
- * Hexagon side midpoints (circumradius 11.0, flat-face distance ≈ 9.53).
- * 3 ruins placed on alternating sides: side 0 (NE), side 2 (SE), side 4 (W).
- * rotY points the asset's front face inward toward the platform centre.
- *
- * Tweak x / y / z / rotY / scale here OR use the lil-gui panel at runtime.
- */
 export interface AssetPlacement {
   x: number;
   y: number;
