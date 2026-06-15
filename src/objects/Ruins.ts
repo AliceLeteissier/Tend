@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { setupAssetGUI } from "../ui/AssetGUI";
 
 export interface AssetPlacement {
   x: number;
@@ -28,7 +27,7 @@ export function createRuins(scene: THREE.Scene): void {
       console.log("✅ ruin1.glb loaded");
       const instances: THREE.Group[] = [];
 
-      PLACEMENTS.forEach((p, i) => {
+      PLACEMENTS.forEach((p) => {
         const instance = gltf.scene.clone();
         instance.position.set(p.x, p.y, p.z);
         instance.rotation.y = p.rotY;
@@ -44,9 +43,6 @@ export function createRuins(scene: THREE.Scene): void {
         scene.add(instance);
         instances.push(instance as unknown as THREE.Group);
       });
-
-      // Attach GUI controls after assets are in the scene
-      // setupAssetGUI("Ruins", instances, PLACEMENTS);
     },
     undefined,
     (err) => console.error("Ruin load failed:", err),

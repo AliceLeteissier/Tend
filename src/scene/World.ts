@@ -187,7 +187,6 @@ export async function buildWorld(): Promise<void> {
 
   // ── Animation loop ──────────────────────────────────────────────────────
   const clock = new THREE.Clock();
-  let vrTriggerWasPressed = false;
 
   renderer.setAnimationLoop(() => {
     const t = clock.getElapsedTime();
@@ -206,13 +205,6 @@ export async function buildWorld(): Promise<void> {
 
     particles.rotation.y += 0.0006;
     controls.update();
-
-    // VR gamepad fallback
-    if (renderer.xr.isPresenting) {
-      const inputSource = renderer.xr.getSession()?.inputSources[0];
-      const trigger = inputSource?.gamepad?.buttons[0]?.pressed ?? false;
-      vrTriggerWasPressed = trigger;
-    }
 
     renderer.render(scene, camera);
   });
