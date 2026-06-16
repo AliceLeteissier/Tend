@@ -2,6 +2,8 @@
 
 A WebXR experience about how digital habits reshape the body.
 
+Live : https://tend-virid.vercel.app
+
 ## Quick start
 
 ```bash
